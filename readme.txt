@@ -1,6 +1,6 @@
 === Grid Columns ===
 Contributors: greenshady
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3687060
+Donate link: 
 Tags: shortcode
 Requires at least: 3.4
 Tested up to: 3.5
@@ -23,6 +23,9 @@ Support for this plugin is handled on the Theme Hybrid <a href="http://themehybr
 1. Upload the `grid-columns` folder to your `/wp-content/plugins` directory.
 1. In your WordPress dashboard, head over to the *Plugins* section.
 1. Activate *Grid Columns*.
+
+If your theme is using twitter boot strap you can add the following line to your functions file
+`add_theme_support( 'grid', 'twitter-bootstrap' );`
 
 == Frequently Asked Questions ==
 

@@ -39,7 +39,7 @@ class Grid_Columns {
 	 * @access public
 	 * @var    int
 	 */
-	public $grid = 4;
+	public $grid = 12;
 
 	/**
 	 * The current total number of columns in the grid.
@@ -67,7 +67,8 @@ class Grid_Columns {
 	 * @var    bool
 	 */
 	public $is_last_column = false;
-
+	
+	public $supports;
 	/**
 	 * Allowed grids can be 2, 3, 4, 5, or 12 columns.
 	 *
@@ -85,7 +86,7 @@ class Grid_Columns {
 	 * @return void
 	 */
 	public function __construct() {
-
+		
 		/* Register shortcodes on 'init'. */
 		add_action( 'init', array( &$this, 'register_shortcode' ) );
 
@@ -107,6 +108,11 @@ class Grid_Columns {
 	 */
 	public function register_shortcode() {
 		add_shortcode( 'column', array( &$this, 'do_shortcode' ) );
+		
+		$this->supports = get_theme_support( 'grid' );
+		
+		if('twitter-bootstrap' == $this->supports[0])
+			require_once('support/twitter-bootstrap/action.php');
 	}
 
 	/**
@@ -120,7 +126,9 @@ class Grid_Columns {
 
 		/* Use the .min stylesheet if SCRIPT_DEBUG is turned off. */
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-
+		
+		
+		if( $this->supports[0] != 'twitter-bootstrap' ):
 		/* Enqueue the stylesheet. */
 		wp_enqueue_style(
 			'grid-columns',
@@ -128,6 +136,7 @@ class Grid_Columns {
 			null,
 			'20121007'
 		);
+		endif;
 	}
 
 	/**
@@ -155,15 +164,23 @@ class Grid_Columns {
 			'gc_column_defaults',
 			array(
 				'grid'  => $this->grid,
-				'span'  => 1,
+				'span'  => 6,
 				'push'  => 0,
-				'class' => ''
+				'class' => '',
+				'size'  => null
 			)
 		);
-
+		
+		// for backwards compatibility if we have columns that have 
+		if( !isset( $attr['span'] ) && isset( $attr['size'] ) ){
+			$attr['span'] = (int)$attr['size'];
+		} else {
+			$attr['span'] = ( !isset( $attr['span'] ) ? 6 : $attr['span'] );	
+		}
+				
 		/* Parse the arguments. */
 		$attr = shortcode_atts( $defaults, $attr );
-
+		
 		/* Allow devs to filter the arguments. */
 		$attr = apply_filters( 'gc_column_args', $attr );
 
@@ -182,7 +199,9 @@ class Grid_Columns {
 
 		/* Add to the total $span. */
 		$this->span = $this->span + $attr['span'] + $attr['push'];
-
+		
+		
+		
 		/* Column classes. */
 		$column_classes[] = 'column';
 		$column_classes[] = "column-span-{$attr['span']}";
@@ -208,7 +227,8 @@ class Grid_Columns {
 			/* Set the $is_last_column property to true. */
 			$this->is_last_column = true;
 		}
-
+		
+		
 		/* Object properties. */
 		$object_vars = get_object_vars( $this );
 
@@ -221,7 +241,7 @@ class Grid_Columns {
 		/* Output */
 
 		/* If this is the first column. */
-		if ( $this->is_first_column ) {
+		if ( $this->is_last_column ) {
 
 			/* Row classes. */
 			$row_classes = array( 'column-grid', "column-grid-{$this->grid}" );
@@ -260,12 +280,14 @@ class Grid_Columns {
 	 * @return void
 	 */
 	public function reset() {
-
+		$support = $this->supports;
+		
 		foreach ( get_class_vars( __CLASS__ ) as $name => $default )
 			$this->$name = $default;
+		
+		// support stays the same across once its set
+		$this->supports = $support;
 	}
 }
 
 new Grid_Columns();
-
-?>
