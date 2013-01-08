@@ -98,7 +98,34 @@ class Grid_Columns {
 		add_filter( 'gc_column_content', 'shortcode_unautop' );
 		add_filter( 'gc_column_content', 'do_shortcode' );
 	}
-
+	
+	
+	/**
+	* has_shortcode function.
+	*
+	* @access public
+	* @param mixed $shortcode
+	* @return void
+	*/
+	function has_shortcode( $shortcode ) {
+		global $shortcode_tags;
+		
+		return ( in_array( $shortcode, array_keys ($shortcode_tags) ) ? true : false);
+	}
+	
+	/**
+	* add_shortcode function.
+	*
+	* @access public
+	* @param mixed $shortcode
+	* @param mixed $shortcode_function
+	* @return void
+	*/
+	function add_shortcode( $shortcode, $shortcode_function ) {
+	
+		if( !$this->has_shortcode( $shortcode ) )
+			add_shortcode( $shortcode, array( &$this, $shortcode_function ) );
+	}
 	/**
 	 * Registers the [column] shortcode.
 	 *
@@ -107,12 +134,14 @@ class Grid_Columns {
 	 * @return void
 	 */
 	public function register_shortcode() {
-		add_shortcode( 'column', array( &$this, 'do_shortcode' ) );
+		$this->add_shortcode( 'column', 'do_shortcode' );
 		
 		$this->supports = get_theme_support( 'grid' );
 		
 		if('twitter-bootstrap' == $this->supports[0])
 			require_once('support/twitter-bootstrap/action.php');
+			
+		
 	}
 
 	/**
@@ -128,7 +157,7 @@ class Grid_Columns {
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 		
 		
-		if( $this->supports[0] != 'twitter-bootstrap' ):
+		if( !isset( $this->supports[0]) ):
 		/* Enqueue the stylesheet. */
 		wp_enqueue_style(
 			'grid-columns',
@@ -149,7 +178,7 @@ class Grid_Columns {
 	 * @return string
 	 */
 	public function do_shortcode( $attr, $content = null ) {
-
+		var_dump('jey');
 		/* If there's no content, just return back what we got. */
 		if ( is_null( $content ) )
 			return $content;
