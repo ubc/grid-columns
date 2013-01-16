@@ -84,7 +84,7 @@ here you should see 4 columns each taking up a quarter of the space
 
 here you should see 4 columns each taking up a quarter of the space
 
-[column size=3 ] Some content [/column]
+[column grid="4" span="1" ] Some content [/column]
 
 [column grid="4" span="1" ] Some content [/column]
 
