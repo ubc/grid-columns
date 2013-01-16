@@ -141,7 +141,6 @@ class Grid_Columns {
 		if('twitter-bootstrap' == $this->supports[0])
 			require_once('support/twitter-bootstrap/action.php');
 			
-		
 	}
 
 	/**
@@ -158,13 +157,13 @@ class Grid_Columns {
 		
 		
 		if( !isset( $this->supports[0]) ):
-		/* Enqueue the stylesheet. */
-		wp_enqueue_style(
-			'grid-columns',
-			trailingslashit( plugin_dir_url( __FILE__ ) ) . "css/columns$suffix.css",
-			null,
-			'20121007'
-		);
+			/* Enqueue the stylesheet. */
+			wp_enqueue_style(
+				'grid-columns',
+				trailingslashit( plugin_dir_url( __FILE__ ) ) . "css/columns$suffix.css",
+				null,
+				'20121007'
+			);
 		endif;
 	}
 
@@ -178,7 +177,7 @@ class Grid_Columns {
 	 * @return string
 	 */
 	public function do_shortcode( $attr, $content = null ) {
-		var_dump('jey');
+		
 		/* If there's no content, just return back what we got. */
 		if ( is_null( $content ) )
 			return $content;
