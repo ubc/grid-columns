@@ -269,7 +269,7 @@ class Grid_Columns {
 		/* Output */
 
 		/* If this is the first column. */
-		if ( $this->is_last_column ) {
+		if ( $this->is_first_column ) {
 
 			/* Row classes. */
 			$row_classes = array( 'column-grid', "column-grid-{$this->grid}" );
