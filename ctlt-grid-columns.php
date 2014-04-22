@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: C Grid Columns
+ * Plugin Name: CTLT Grid Columns
  * Plugin URI: http://github.com/ubc/grid-columns
  * Description: A [column] shortcode plugin.
  * Version: 1
@@ -29,16 +29,7 @@
  * @link      http://themehybrid.com/plugins/grid-columns
  * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
-function grid_column_update_plugin(){
-	
-	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-	if( is_plugin_active( 'grid-columns/grid-columns.php' ) ) {
-		deactivate_plugins( 'grid-columns/grid-columns.php' );
-		activate_plugin( 'grid-columns/ctlt-grid-columns.php' );
-	}
 
-}
-grid_column_update_plugin();
 
 class CTLT_Grid_Columns {
 
