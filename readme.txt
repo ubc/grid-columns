@@ -5,7 +5,7 @@ Tags: shortcode
 Requires at least: 3.4
 Tested up to: 3.5
 License: GPLv2 or later
-Stable tag: 0.1.1
+Stable tag: 1.
 
 A [column] shortcode that allows users to create columnized content.
 
