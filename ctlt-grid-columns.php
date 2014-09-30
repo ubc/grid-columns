@@ -3,7 +3,7 @@
  * Plugin Name: CTLT Grid Columns
  * Plugin URI: http://github.com/ubc/grid-columns
  * Description: A [column] shortcode plugin.
- * Version: 1
+ * Version: 1.0
  * Author: CTLT Dev
  * Author URI: http://ctlt.ubc.ca
  *
